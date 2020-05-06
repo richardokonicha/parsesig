@@ -7,6 +7,11 @@ from parser import pasig
 server = Flask(__name__)
 TOKEN = os.getenv("TOKEN")
 URL = os.getenv("URL")
+TOKEN="852053528:AAHL_ryUUJ1JOhenzmI0WDiayAnxxqGFmyU"
+URL="https://test1335.herokuapp.com/"
+# URL="https://d4ed5f94.ngrok.io/"
+
+
 
 
 bot = telebot.TeleBot(TOKEN, threaded=True)
