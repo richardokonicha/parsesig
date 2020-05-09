@@ -7,18 +7,22 @@ from parser import pasig
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
-message_pair = db.MessagePair.get_name('testcase')
+# message_pair = db.MessagePair.get_name('testcase')
+message_pair = db.MessagePair.get_name('BST')
+
 api_hash = message_pair.api_hash
 api_id = message_pair.api_id
 bot_token = message_pair.bot_token
 try:
     channel_input = int(message_pair.channel_input)
+    channel_output = int(message_pair.channel_output)
 except ValueError:
     channel_input = message_pair.channel_input
-channel_output = message_pair.channel_output
-pair_name = message_pair.pair_name
+    channel_output = message_pair.channel_output
 
+pair_name = message_pair.pair_name
 client = TelegramClient(pair_name, api_id, api_hash)
+
 
 @client.on(
     events.NewMessage(
@@ -29,6 +33,7 @@ client = TelegramClient(pair_name, api_id, api_hash)
 async def forwarder(event):
     text = event.message.text
     signal = pasig(text)
+    print(signal)
     output_channel = await client.send_message(channel_output, signal)
 
 @client.on(events.NewMessage)
