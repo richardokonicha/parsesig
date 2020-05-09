@@ -1,1 +1,1 @@
-web: python3.7 bot.py
+web: python3.7 telethon_access.py
