@@ -7,7 +7,6 @@ from parser import pasig
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
-
 message_pair = db.MessagePair.get_name('testcase')
 api_hash = message_pair.api_hash
 api_id = message_pair.api_id
