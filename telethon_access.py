@@ -23,7 +23,7 @@ channel2 = 'https://t.me/testcasechannel'
     events.NewMessage(
         chats= channel1, 
         pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
-        outgoing=True
+        incoming=True
         ))
 async def forwarder(event):
     text = event.message.text
