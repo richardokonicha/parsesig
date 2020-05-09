@@ -2,7 +2,7 @@
 import re
 
 def bparse(line):
-    parser = re.search("^(BUY)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
+    parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
     if parser != None:
         p = parser.groups()
         output = f"""

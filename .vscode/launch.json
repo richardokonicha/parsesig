@@ -5,13 +5,16 @@
     "version": "0.2.0",
     "configurations": [
 
+        
+
+
 
         {
             "name": "Sigparser",
             "type": "python",
             "request": "launch",
-            "program": "bot.py",
-            // "program": "parser.py",
+            "program": "telethon_access.py",
+            // "program": "parser.py",v
 
             "console": "integratedTerminal"
         }
