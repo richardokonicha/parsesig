@@ -17,19 +17,24 @@ from parser import pasig
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-channel1 = "https://t.me/testcasechannel2"
-channel2 = 'https://t.me/testcasechannel'
+channel_input = -1001201822144
+channel_output = "testcasechannel2"
+# channel1 = 1201822144
 @client.on(
     events.NewMessage(
-        chats= channel1, 
+        chats= channel_input, 
         pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
         incoming=True
         ))
 async def forwarder(event):
     text = event.message.text
     signal = pasig(text)
-    output_channel = await client.send_message(channel2, signal)
+    output_channel = await client.send_message(channel_output, signal)
 
+@client.on(events.NewMessage)
+async def fresh_message(event):
+    text = event.message.text
+    # event._entities[-1001201822144].title = 'Testcasechannel3'
 client.start()
 # client.add_event_handler(forwarder)
 client.run_until_disconnected()
