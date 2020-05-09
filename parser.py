@@ -7,7 +7,8 @@ def bparse(line):
         p = parser.groups()
         output = f"""
 #{p[1]}
-{p[0]}📈{p[2]}"""
+{p[0]}📈{p[2]}
+"""
         return output
     else:
         return None
