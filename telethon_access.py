@@ -15,13 +15,16 @@ api_id = message_pair.api_id
 bot_token = message_pair.bot_token
 try:
     channel_input = int(message_pair.channel_input)
-    channel_output = int(message_pair.channel_output)
 except ValueError:
     channel_input = message_pair.channel_input
+try:
+    channel_output = int(message_pair.channel_output)
+except ValueError:
     channel_output = message_pair.channel_output
 
+channel_input = -1001313782946
 pair_name = message_pair.pair_name
-client = TelegramClient(pair_name, api_id, api_hash)
+client = TelegramClient("BST_t", api_id, api_hash)
 
 
 @client.on(
