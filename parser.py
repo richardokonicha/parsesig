@@ -5,9 +5,16 @@ def bparse(line):
     parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
     if parser != None:
         p = parser.groups()
+        place = p[0]
+        place = place.upper()
+
+        if place == "BUY":
+            flag = '📈'
+        if place == "SELL":
+            flag = '📉'
         output = f"""
 #{p[1]}
-{p[0]}📈{p[2]}
+{p[0]}{flag}{p[2]}
 """
         return output
     else:
