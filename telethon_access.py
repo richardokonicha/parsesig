@@ -24,6 +24,7 @@ except ValueError:
     print('couldnt get env')
 
 # client = TelegramClient("BST_t", api_id, api_hash)
+print(session)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 # client event handler on incoming new messages matching the regex filter from chat or channel
