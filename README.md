@@ -1,11 +1,11 @@
-# SIGPARSER
+# Parsesig
+
 
 ## A Telegram program that forwards Forex Signals from one Telegram group or channel to another
 
-Listens for message events on CHATINPUT channel that matches the regex pattern and parses it with pasig()
-
-REGEX
->>^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]
+Listens for message events on CHATINPUT channel that matches the Regex pattern 
+`^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]` 
+and passes it with `pasig()` Engine
 
 ```comment
                                 |     #EURUSD
