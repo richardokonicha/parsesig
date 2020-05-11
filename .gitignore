@@ -7,3 +7,5 @@ bot.py
 bot.py
 jsonfile.json
 .env
+*.session
+*.db
