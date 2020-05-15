@@ -54,10 +54,10 @@ async def forwarder(event):
     signal = pasig(text)
     print(signal)
     output_channel = await client.send_message(test_output, signal)
-    
+
 @client.on(events.NewMessage)
 async def trooper(event):
-    test = event.message.text
+    text = event.message.text
     print(text)
 
 client.start()
