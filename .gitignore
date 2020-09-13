@@ -9,3 +9,5 @@ jsonfile.json
 .env
 *.session
 *.db
+extra/*
+.vscode/*
