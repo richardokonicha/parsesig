@@ -14,16 +14,13 @@ load_dotenv()
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-try:
-    test_input = int(os.getenv("TESTINPUT"))
-    channel_input = int(os.getenv('CHATINPUT'))
-    test_output = int(os.getenv("TESTOUTPUT"))
-    channel_output = int(os.getenv('CHATOUTPUT'))
-    session = os.getenv("SESSION")
-    api_hash = os.getenv("API_HASH")
-    api_id = os.getenv("API_ID")
-except ValueError:
-    print('couldnt get env')
+test_input = int(os.getenv("TESTINPUT"))
+channel_input = int(os.getenv('CHATINPUT'))
+test_output = int(os.getenv("TESTOUTPUT"))
+channel_output = int(os.getenv('CHATOUTPUT'))
+session = os.getenv("SESSION")
+api_hash = os.getenv("API_HASH")
+api_id = os.getenv("API_ID")
 
 # client = TelegramClient("BST_t", api_id, api_hash)
 print(session)
