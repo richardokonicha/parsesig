@@ -6,6 +6,8 @@ import logging
 from parser import pasig
 import os
 from dotenv import load_dotenv
+
+from util import bot_forward
 load_dotenv()
 
 # set logging level
@@ -44,16 +46,17 @@ async def forwarder(event):
 # listens on the test channel
 @client.on(
     events.NewMessage(
-        chats= test_input, 
-        pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
+        # chats=test_input,
+        # pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
         incoming=True
         ))
 # function takes message text that matches the regex filter and transforms using pasig transformer and sends to new channel
-async def forwarder(event):
+async def forwarderr(event):
     text = event.message.text
-    signal = pasig(text)
-    print(signal)
-    output_channel = await client.send_message(test_output, signal)
+    bot_forward(text)
+    # signal = pasig(text)
+    # output_channel = await client.send_message(test_output, text)
+
 
 @client.on(events.NewMessage)
 async def trooper(event):
