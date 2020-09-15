@@ -14,11 +14,11 @@ load_dotenv()
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-test_input = int(os.getenv("TESTINPUT"))
 channel_input = os.getenv('CHATINPUT')
 channel_input = [int(i) for i in channel_input.split(' ')]  # dont
 channel_output = int(os.getenv('CHATOUTPUT')) # dont
 
+test_input = os.getenv("TESTINPUT")
 test_output = os.getenv("TESTOUTPUT")
 test_input = [int(i) for i in test_input.split(' ')]  # dont
 
