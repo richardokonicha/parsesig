@@ -16,10 +16,12 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 test_input = int(os.getenv("TESTINPUT"))
 channel_input = os.getenv('CHATINPUT')
-channel_input = [int(i) for i in channel_input.split(' ')]
+channel_input = [int(i) for i in channel_input.split(' ')]  # dont
+channel_output = int(os.getenv('CHATOUTPUT')) # dont
 
-test_output = int(os.getenv("TESTOUTPUT"))
-channel_output = int(os.getenv('CHATOUTPUT'))
+test_output = os.getenv("TESTOUTPUT")
+test_input = [int(i) for i in test_input.split(' ')]  # dont
+
 session = os.getenv("SESSION")
 api_hash = os.getenv("API_HASH")
 api_id = os.getenv("API_ID")
@@ -47,7 +49,8 @@ async def forwarder(event):
     events.NewMessage(
         chats=test_input,
         # pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
-        incoming=True
+        incoming=True,
+        outgoing=True
         ))
 # function takes message text that matches the regex filter and transforms using pasig transformer and sends to new channel
 async def forwarderr(event):
