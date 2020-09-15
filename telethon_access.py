@@ -15,7 +15,9 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.WARNING)
 
 test_input = int(os.getenv("TESTINPUT"))
-channel_input = int(os.getenv('CHATINPUT'))
+channel_input = os.getenv('CHATINPUT')
+channel_input = [int(i) for i in channel_input.split(' ')]
+
 test_output = int(os.getenv("TESTOUTPUT"))
 channel_output = int(os.getenv('CHATOUTPUT'))
 session = os.getenv("SESSION")
