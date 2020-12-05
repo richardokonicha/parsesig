@@ -1,1 +1,1 @@
-worker: python3.7 telethon_access.py
+worker: python3 telethon_access.py
