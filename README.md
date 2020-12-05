@@ -40,7 +40,7 @@ is forwarded to the channel set in the CHATOUTPUT environment variable same goes
 ---
 
 * Create new Heroku app on your [Heroku account](https://heroku.com).
-* Link app to using the gihub option and select the repository
+* Link app to using the github option and select the repository
 * From terminal set git heroku remote url
   
   ```bash
@@ -61,3 +61,20 @@ is forwarded to the channel set in the CHATOUTPUT environment variable same goes
   ```bash
   heroku ps:scale worker=1
   ```
+
+## Local PC and ubuntu server setup 
+
+---
+
+* Download and Install [Python intepreter](https://www.python.org/) and git
+* From terminal 
+```bash
+git clone https://github.com/konichar/parsesig
+cd parsesig
+```
+* Add environment variables to .env file
+* From terminal 
+``` 
+pip install -r requirements.txt
+python telethon_access.py
+```
