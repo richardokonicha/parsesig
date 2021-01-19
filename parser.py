@@ -1,4 +1,3 @@
-
 import re
 
 def bparse(line):

@@ -24,13 +24,6 @@ Main pair
   CHATOUTPUT=-1234567890123
   ```
 
-Test pair
-
-  ```python
-  TESTINPUT=-12345678901234
-  TESTOUTPUT=-1234567890123
-  ```
-
 All matching messages from the channel set in the CHATINPUT environment variable 
 is forwarded to the channel set in the CHATOUTPUT environment variable same goes for the test variables
 
