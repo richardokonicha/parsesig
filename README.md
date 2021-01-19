@@ -20,15 +20,11 @@ Sigparser takes the following environment variables or configure .env file in th
 Main pair
 
   ```python
-  CHATINPUT=-12345678901234
-  CHATOUTPUT=-1234567890123
-  ```
-
-Test pair
-
-  ```python
-  TESTINPUT=-12345678901234
-  TESTOUTPUT=-1234567890123
+  API_HASH = f36c29aaaaa698ecb1e59e31b
+  API_ID = 127555
+  CHATINPUT = -12345678901234
+  CHATOUTPUT = -1234567890123
+  SESSION = *this would be auto generated at first run*
   ```
 
 All matching messages from the channel set in the CHATINPUT environment variable 
@@ -42,7 +38,7 @@ is forwarded to the channel set in the CHATOUTPUT environment variable same goes
 * Create new Heroku app on your [Heroku account](https://heroku.com).
 * Link app to using the github option and select the repository
 * From terminal set git heroku remote url
-  
+   
   ```bash
   git remote set-url --add heroku https://git.heroku.com/{your_app_name}.git
   heroku login
@@ -62,6 +58,8 @@ is forwarded to the channel set in the CHATOUTPUT environment variable same goes
   heroku ps:scale worker=1
   ```
 
+
+=======
 ## Local PC and ubuntu server setup 
 
 ---
@@ -78,3 +76,5 @@ cd parsesig
 pip install -r requirements.txt
 python telethon_access.py
 ```
+ *On first run you would be asked for your Phone number and a verification code*
+ *a valid SESSION would be generated and added to your .env file*
