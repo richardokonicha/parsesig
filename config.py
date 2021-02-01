@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -18,3 +19,13 @@ def save_session(client, session):
         env_string = f"SESSION = {session_string}"
         with open(".env", "a") as env_file:
             env_file.write(env_string)
+
+def pushToStore(message_pair: dict) -> None:
+    with open('id_pairs.json', 'w') as outfile:
+        json.dump(message_pair, outfile)
+
+def getRefId(message_id: int) -> int:
+    with open('id_pairs.json') as json_file:
+        data = json.load(json_file)
+        id = data[str(message_id)]
+    return id
