@@ -50,17 +50,6 @@ async def forwarder(event):
         output_channel = await client.send_message(channel_output, signal, file=msg_file, reply_to=ref)
         r.set(event.message.id, output_channel.id)
 
-
-    # try:
-    #     msg_file = event.message.file.media
-    #     if msg_file.mime_type == 'application/pdf':
-    #         print("A PDF Document Ignoring")
-    #         return
-    #     else:
-    #         pass
-    # except:
-    #     pass
-    #     # msg_file = None
     print(signal)
 
 # keeps heroku from falling asleep
