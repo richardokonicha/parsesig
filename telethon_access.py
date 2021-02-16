@@ -56,7 +56,7 @@ async def forwarder(event):
 @client.on(events.NewMessage)
 async def wakeup(event):
     text = event.message.text
-    # print(text)
+    print(text)
 
 client.start()
 save_session(client, session)
