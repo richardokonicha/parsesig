@@ -4,7 +4,7 @@ from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
 from text_parser import pasig
-from datetime import datetime
+from datetime import datetime   
 from config import api_hash, api_id, channel_input, channel_output, session, save_session, REDISTOGO_URL
 # from util import bot_forward
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -19,7 +19,7 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
 @client.on(
     events.NewMessage(
         chats= channel_input, 
-        pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
+        # pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
         incoming=True,
         ))
 async def forwarder(event):
@@ -47,6 +47,7 @@ async def forwarder(event):
         ext = None
 
     if ext != '.pdf':
+        print("sending...")
         output_channel = await client.send_message(channel_output, signal, file=msg_file, reply_to=ref)
         r.set(event.message.id, output_channel.id)
 
