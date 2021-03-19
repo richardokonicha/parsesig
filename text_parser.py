@@ -71,3 +71,17 @@ BUY:chart_with_upwards_trend:1.0877
 """
 
 # print(pasig(rawsignal))
+
+
+### EB10 filters
+
+def emanuelefilter(text):
+
+    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+)", text)
+    invalid = re.search("(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|.com|EXPIRES|@+)", text)
+
+    value = bool(parser)
+    if invalid:
+        value = False
+        print('message filtered out, Cheers')
+    return value
