@@ -3,7 +3,7 @@ from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
-from text_parser import pasig
+from text_parser import emanuelefilter
 from datetime import datetime   
 from config import api_hash, api_id, channel_input, channel_output, session, save_session, REDISTOGO_URL
 # from util import bot_forward
@@ -21,15 +21,11 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
         chats= channel_input, 
         # pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
         incoming=True,
+        outgoing=True
         ))
 async def forwarder(event):
     text = event.message.text
-    signal = pasig(text)
-    if bool(signal):
-        pass
-    else:
-        signal = text
-
+    # signal = pasig(text)
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
 
@@ -46,12 +42,13 @@ async def forwarder(event):
         msg_file = None
         ext = None
 
-    if ext != '.pdf':
-        print("sending...")
-        output_channel = await client.send_message(channel_output, signal, file=msg_file, reply_to=ref)
+    valid = emanuelefilter(text)
+    if valid:
+        output_channel = await client.send_message(channel_output, text, file=msg_file, reply_to=ref)
         r.set(event.message.id, output_channel.id)
-
-    print(signal)
+        print(f"\u001b[32msent......{text}\u001b[37m....")
+    else:
+        print(f"\u001b[31mNot Sent  {text}\u001b[37m...") 
 
 # keeps heroku from falling asleep
 @client.on(events.NewMessage)
