@@ -3,7 +3,7 @@ from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
-from text_parser import emanuelefilter
+from text_parser import emanuelefilter, filtersignal
 from datetime import datetime   
 from config import api_hash, api_id, channel_input, channel_output, session, save_session, REDISTOGO_URL
 # from util import bot_forward
@@ -43,6 +43,9 @@ async def forwarder(event):
         ext = None
 
     valid = emanuelefilter(text)
+
+    text = filtersignal(text)
+
     if valid:
         output_channel = await client.send_message(channel_output, text, file=msg_file, reply_to=ref)
         r.set(event.message.id, output_channel.id)

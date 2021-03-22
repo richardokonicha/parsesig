@@ -85,3 +85,22 @@ def emanuelefilter(text):
         value = False
         print('message filtered out, Cheers')
     return value
+
+
+def filtersignal(text):
+    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP)", text)
+
+    if parser:
+        text = f"""
+{text}
+..................................
+
+⚫ INVEST WITH CONSCIENCE 
+⚫ Don't invest more than you can afford
+⚫ This signal does not constitute an investment advice, 
+we are not responsible for money loss
+
+
+        """
+    return text
+    
