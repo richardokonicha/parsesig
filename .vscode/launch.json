@@ -15,7 +15,7 @@
       "name": "Access",
       "type": "python",
       "request": "launch",
-      "program": "telethon_access.py",
+      "program": "main.py",
       "console": "integratedTerminal"
     }
   ]

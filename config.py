@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 channel_input = os.getenv('CHATINPUT')
-channel_input = channel_input.split(' ')
+channel_input = [int(i) for i in channel_input.split(' ')] 
 channel_output = os.getenv('CHATOUTPUT')
 REDISTOGO_URL = os.getenv('REDISTOGO_URL')
 
