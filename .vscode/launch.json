@@ -10,6 +10,13 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Access",
+      "type": "python",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal"
     }
   ]
 }
