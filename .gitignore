@@ -4,3 +4,4 @@ __pycache__/*
 extra/*
 .vscode/*
 parsigenv/*
+.vscode/launch.json
