@@ -4,4 +4,5 @@ __pycache__/*
 extra/*
 .vscode/*
 parsigenv/*
-.vscode/launch.json
+.vscode/*
+prod.env.sample
