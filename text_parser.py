@@ -87,11 +87,14 @@ def emanuelefilter(text):
     return value
 
 
-def filtersignal(text):
+def transform_text(text):
     parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP)", text)
 
+    is_warning = bool(re.search("INVEST WITH CONSCIENCE", text))
+
     if parser:
-        text = f"""
+        if not is_warning:
+            text = f"""
 {text}
 ..................................
 
@@ -99,8 +102,7 @@ def filtersignal(text):
 ⚫ Don't invest more than you can afford
 ⚫ This signal does not constitute an investment advice, 
 we are not responsible for money loss
-
-
         """
+
     return text
     
