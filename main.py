@@ -3,7 +3,7 @@ from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
-from text_parser import emanuelefilter, filtersignal
+from text_parser import emanuelefilter, transform_text
 from datetime import datetime   
 from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -23,28 +23,29 @@ async def forwarder(event):
     text = event.message.text
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
-    try:
-        ref = int(r.get(reply_msg).decode('utf-8'))
-    except:
-        print('Out of scope or bounds for redis')
-        ref = None
-    
-    try:
-        msg_file = event.message.file.media
-        ext = event.message.file.ext
-    except:
-        msg_file = None
-        ext = None
 
     valid = emanuelefilter(text)
-    text = filtersignal(text)
+    text = transform_text(text)
 
-    if valid:
-        output_channel = await client.send_message(channel_output, text, file=msg_file, reply_to=ref)
-        r.set(event.message.id, output_channel.id)
-        print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
-    else:
-        print(f"\u001b[31mNot Sent  {text[:70]} ...Not Sent\u001b[37m...") 
+    for cht in channel_output:
+        try:
+            ref = int(r.get(f"{cht}-{reply_msg}").decode('utf-8'))
+        except:
+            print('Out of scope or bounds for redis')
+            ref = None
+        try:
+            msg_file = event.message.file.media
+            ext = event.message.file.ext
+        except:
+            msg_file = None
+            ext = None
+
+        if valid:
+            output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
+            r.set(f"{cht}-{event.message.id}", output_channel.id)
+            print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
+        else:
+            print(f"\u001b[31mNot Sent  {text[:70]} ...Not Sent\u001b[37m...") 
 
 @client.on(events.NewMessage)
 async def wakeup(event):
