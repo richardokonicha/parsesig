@@ -6,7 +6,7 @@ load_dotenv()
 chinput = os.getenv('CHATINPUT')
 channel_input = [int(i) for i in chinput.split(' ')] 
 choutput = os.getenv('CHATOUTPUT')
-channel_output = [i for i in choutput.split(' ')] 
+channel_output = [int(i) for i in choutput.split(' ')] 
 
 REDISTOGO_URL = os.getenv('REDISTOGO_URL')
 
