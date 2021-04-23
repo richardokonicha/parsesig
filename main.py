@@ -3,7 +3,7 @@ from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
-from text_parser import emanuelefilter, transform_text
+from fxfilter import forex_leader
 from datetime import datetime   
 import time
 from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
@@ -25,8 +25,7 @@ async def forwarder(event):
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
 
-    valid = emanuelefilter(text)
-    text = transform_text(text)
+    text = forex_leader(text)
 
     count = 0
     for cht in channel_output:

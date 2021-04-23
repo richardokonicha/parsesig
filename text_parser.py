@@ -1,5 +1,14 @@
 import re
 
+
+def replace_pairs(regex, string):
+  for i in regex:
+    match = re.search(i[0], string)
+    if match:
+      string = string.replace(i[0], i[1])
+  return string
+
+
 def bparse(line):
     parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
     if parser != None:
@@ -106,3 +115,26 @@ we are not responsible for money loss
 
     return text
     
+
+def transform_forexleader(text):
+
+    
+    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP)", text)
+
+    is_warning = bool(re.search("INVEST WITH CONSCIENCE", text))
+
+    if parser:
+        if not is_warning:
+            text = f"""
+{text}
+..................................
+
+⚫ INVEST WITH CONSCIENCE 
+⚫ Don't invest more than you can afford
+⚫ This signal does not constitute an investment advice, 
+we are not responsible for money loss
+        """
+
+    return text
+    
+
