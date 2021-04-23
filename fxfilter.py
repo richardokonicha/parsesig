@@ -8,7 +8,7 @@ def replace_pairs(string):
         ["US100", "US_TECH100"],
         ["US50", "US_500"],
         ["US30", "US_30"],
-        ["GER3", "DAX30"],
+        ["GER30", "DAX30"],
         ["DE30", "DAX30"],
         ["USOIL", "CrudeOIL"],
         ["BTCUSD", "BTCUSD"]
@@ -21,7 +21,7 @@ def replace_pairs(string):
 
 
 def is_whitelisted(text):
-    whitelist = re.search("(USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+)", text)
+    whitelist = re.search("(USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|CLOSE|XAUUSD|US|BTC|GER|DE|OIL|DAX|GOLD)", text)
     blacklist = re.search("(EXPIRES|UPGRADE|YZE|TradingBOT|OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|.com|EXPIRES|@+)", text)
     value = bool(whitelist)
     if blacklist:
@@ -31,12 +31,14 @@ def is_whitelisted(text):
 
 
 def add_to_text(text):
-    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP|US_TECH100|US100|DAX30|CrudeOIL|GOLD)", text)
+    parser = re.search("(CLOSE|PIP|SL|Move|TAKE|PROFIT|Set|SET|entry|RUNNING)", text)
     is_warning = bool(re.search("Usa la size adeguata al tuo capitale se", text))
     if parser:
-        if not is_warning:
-            text = f"""
+      return text
+    if not is_warning:
+      text = f"""
 {text}
+
 Usa la size adeguata al tuo capitale se apri questo trade e rispetta il money management 📈
         """
     return text
@@ -49,3 +51,11 @@ def forex_leader(string):
   string = replace_pairs(string)
   text = add_to_text(string)
   return text
+
+
+
+string = """
+GER30 CLOSE +870 PIPS :boom::boom::boom:
+
+"""
+print(forex_leader(string))
