@@ -11,7 +11,9 @@ def replace_pairs(string):
         ["GER30", "DAX30"],
         ["DE30", "DAX30"],
         ["USOIL", "CrudeOIL"],
-        ["BTCUSD", "BTCUSD"]
+        ["BTCUSD", "BTCUSD"],
+        ["UK100", "FTSE100"]
+
         ]
   for i in regex:
     match = re.search(i[0], string)
@@ -53,9 +55,54 @@ def forex_leader(string):
   return text
 
 
+def process_signals(line):
+    parser = re.search("([A-Z0-9]+)([\s+-]+)(?=BUY|SELL)(BUY|SELL)\s+([0-9.]+)", line)
+    tpraw = re.search("(TP)([:\s]+)([0-9.]+)", line)
+    slraw = re.search("(SL)([:\s]+)([0-9.]+)", line)
+
+    if parser != None:
+      p = parser.groups()
+      pair, action, price = p[0], p[2], p[3]
+      pair = replace_pairs(pair)
+
+      if tpraw != None:
+        t = tpraw.groups()
+        tp = t[2]
+      else:
+        tp = None
+
+      if slraw != None:
+        s = slraw.groups()
+        sl = s[2]
+      else:
+        sl = None
+
+    
+      output = f"""
+{pair} {action} @ {price}
+
+TP: {tp or 'aperto'}
+SL: {sl or 'aperto'}
+
+Usa la size adeguata al tuo capitale se apri questo trade e rispetta il money management 📈
+
+      """
+      return output
+
 
 string = """
-GER30 CLOSE +870 PIPS :boom::boom::boom:
+US_TECH100 BUY @ 13740
+
+TP: open
+SL: open
+
+Use the appropriate size for your capital if you open this trade and respect money management 📈
 
 """
-print(forex_leader(string))
+
+string1 = """
+UK100 SELL
+
+TP open 6966
+"""
+print(process_signals(string1))

@@ -137,4 +137,3 @@ we are not responsible for money loss
 
     return text
     
-
