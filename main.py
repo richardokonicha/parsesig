@@ -3,7 +3,7 @@ from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
 import logging
 import redis
-from fxfilter import process_signals
+from fxfilter import process_signals, process_report, process_general
 from datetime import datetime   
 import time
 from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
@@ -25,9 +25,11 @@ async def forwarder(event):
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
 
-    text = process_signals(text)
-    if text == None:
-        print(text)
+    text_p = process_signals(text)
+    if text_p == None:
+        text_p = process_report(text)
+        if text_p ==None:
+            text_p = process_general(text)
 
 
     count = 0
@@ -48,9 +50,9 @@ async def forwarder(event):
       
         print(cht, count)
 
-        if text:
+        if text_p:
             try:
-                output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
+                output_channel = await client.send_message(cht, text_p, file=msg_file, reply_to=ref)
                 r.set(f"{cht}-{event.message.id}", output_channel.id)
                 print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
                 time.sleep(2)

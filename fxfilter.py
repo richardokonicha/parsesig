@@ -12,7 +12,10 @@ def replace_pairs(string):
         ["DE30", "DAX30"],
         ["USOIL", "CrudeOIL"],
         ["BTCUSD", "BTCUSD"],
-        ["UK100", "FTSE100"]
+        ["UK100", "FTSE100"],
+        ["💥", "🎯"],
+        ["🔊", "📈"],
+        ["VIP", "FX LEADER ITALIA INDICI"],
 
         ]
   for i in regex:
@@ -90,19 +93,23 @@ Usa la size adeguata al tuo capitale se apri questo trade e rispetta il money ma
       return output
 
 
-string = """
-US_TECH100 BUY @ 13740
 
-TP: open
-SL: open
+def process_report(line):
+    parser = re.search("(CHANNEL\s+REPORT)", line)
+    if parser != None:
+      line = replace_pairs(line)
+      return line
 
-Use the appropriate size for your capital if you open this trade and respect money management 📈
 
-"""
+
+def process_general(line):
+    parser = re.search("CLOSE|PIPS|RUNNING|HALF|SET|SL|at|HIT|pips|Close|half|Move|entry|to|TP", line)
+    if parser != None:
+      line = replace_pairs(line)
+      return line
+
+
 
 string1 = """
-UK100 SELL
-
-TP open 6966
+GER30 RUNNING +630 PIPS :boom:
 """
-print(process_signals(string1))
