@@ -19,7 +19,7 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
 @client.on(
     events.NewMessage(
         chats= channel_input, 
-        pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
+        pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).\s]*", 
         incoming=True,
         ))
 async def forwarder(event):
