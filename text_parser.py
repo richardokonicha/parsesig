@@ -1,7 +1,7 @@
 import re
 
 def bparse(line):
-    parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
+    parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).\s]*", line)
     if parser != None:
         p = parser.groups()
         place = p[0]
