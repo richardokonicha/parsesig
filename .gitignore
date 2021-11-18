@@ -6,3 +6,4 @@ extra/*
 parsigenv/*
 .vscode/*
 prod.env.sample
+env/*
