@@ -1,11 +1,13 @@
+import logging
+from datetime import datetime
+import redis
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
-import logging
-import redis
+from config import (REDISTOGO_URL, api_hash, api_id, channel_input,
+                    channel_output, session)
 from text_parser import emanuelefilter, transform_text
-from datetime import datetime   
-from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
+
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
@@ -15,7 +17,6 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
 @client.on(
     events.NewMessage(
         chats= channel_input, 
-        # pattern=r"^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", 
         incoming=True,
         outgoing=True
         ))
@@ -23,10 +24,8 @@ async def forwarder(event):
     text = event.message.text
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
-
     valid = emanuelefilter(text)
     text = transform_text(text)
-
     count = 0
     for cht in channel_output:
         try:
