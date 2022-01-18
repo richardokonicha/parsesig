@@ -14,6 +14,8 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 r = redis.from_url(url=REDISTOGO_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
+# client = TelegramClient('anon', api_id, api_hash)
+
 @client.on(
     events.NewMessage(
         chats= channel_input, 
