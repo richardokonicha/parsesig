@@ -21,3 +21,4 @@ requests==2.25.1
 rsa==4.7
 Telethon==1.19.0
 urllib3==1.26.2
+urlparse
