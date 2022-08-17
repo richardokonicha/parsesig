@@ -4,14 +4,14 @@ import redis
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
 from telethon.tl.functions.channels import GetMessagesRequest
-from config import (REDISTOGO_URL, api_hash, api_id, channel_input,
+from config import (REDIS_URL, api_hash, api_id, channel_input,
                     channel_output, session)
 from text_parser import emanuelefilter, transform_text
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-r = redis.from_url(url=REDISTOGO_URL)
+r = redis.from_url(url=REDIS_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 # client = TelegramClient('anon', api_id, api_hash)
