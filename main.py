@@ -6,11 +6,16 @@ import redis
 from text_parser import emanuelefilter, transform_text
 from datetime import datetime   
 import time
-from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
+import urlparse
+from config import api_hash, api_id, channel_input, channel_output, session, REDISCLOUD_URL
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-r = redis.from_url(url=REDISTOGO_URL)
+
+url = urlparse.urlparse(REDISCLOUD_URL)
+r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+
+# r = redis.from_url(url=REDISTOGO_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 @client.on(
