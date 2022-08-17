@@ -5,11 +5,12 @@ import logging
 import redis
 from text_parser import emanuelefilter, transform_text
 from datetime import datetime   
-from config import api_hash, api_id, channel_input, channel_output, session, REDISTOGO_URL
+import time
+from config import api_hash, api_id, channel_input, channel_output, session, REDIS_URL
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-r = redis.from_url(url=REDISTOGO_URL)
+r = redis.from_url(url=REDIS_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 @client.on(
@@ -42,6 +43,7 @@ async def forwarder(event):
             ext = None
 
         count += 1
+      
         print(cht, count)
 
         if valid:
@@ -49,8 +51,9 @@ async def forwarder(event):
                 output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
                 r.set(f"{cht}-{event.message.id}", output_channel.id)
                 print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
-            except:
-                print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent\u001b[37m...") 
+                time.sleep(2)
+            except Exception as e:
+                print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent {e}\u001b[37m...") 
         else:
             print(f"\u001b[31mNot Sent invalid {text[:70]} ...Not Sent\u001b[37m...") 
 
