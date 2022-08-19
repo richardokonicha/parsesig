@@ -5,12 +5,12 @@ import logging
 import redis
 from text_parser import pasig
 from datetime import datetime
-from config import api_hash, api_id, channel_input, channel_output, session, save_session, REDISTOGO_URL
+from config import api_hash, api_id, channel_input, channel_output, session, save_session, REDIS_URL
 # from util import bot_forward
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-r = redis.from_url(url=REDISTOGO_URL)
+r = redis.from_url(url=REDIS_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
 # client event handler on incoming new messages matching the regex filter from chat or channel
