@@ -1,5 +1,5 @@
 from telethon import TelegramClient
-from config import (REDISTOGO_URL, api_hash, api_id, channel_input,
+from config import (api_hash, api_id, channel_input,
                     channel_output, session)
 from telethon.sessions import StringSession
 
