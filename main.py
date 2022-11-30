@@ -1,5 +1,15 @@
 import logging
 from datetime import datetime
+import sentry_sdk
+sentry_sdk.init(
+    dsn="https://99d6c429276948bd9e71cf6c80d91885@o4504248900583424.ingest.sentry.io/4504248905236480",
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0
+)
+
 import redis
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
@@ -8,13 +18,14 @@ from config import (REDIS_URL, api_hash, api_id, channel_input,
                     channel_output, session)
 from text_parser import emanuelefilter, transform_text
 
+
+
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
 r = redis.from_url(url=REDIS_URL)
 client = TelegramClient(StringSession(session), api_id, api_hash)
 
-# client = TelegramClient('anon', api_id, api_hash)
 
 @client.on(
     events.NewMessage(
@@ -50,6 +61,8 @@ async def forwarder(event):
                 output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
                 r.set(f"{cht}-{event.message.id}", output_channel.id)
                 print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
+            except ConnectionRefusedError:
+                print(f"\u001b[31mRedis broke\u001b[37m...") 
             except:
                 print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent\u001b[37m...") 
         else:
