@@ -18,6 +18,7 @@ services:
       #     - "./:/app"
       environment:
           - REDIS=redis://redis:6379
+          - PYTHONUNBUFFERED=TRUE
       command: python main.py
       depends_on:
       - redis
