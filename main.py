@@ -17,9 +17,8 @@ from telethon.tl.functions.channels import GetMessagesRequest
 from config import (REDIS_URL, api_hash, api_id, channel_input,
                     channel_output, session)
 from text_parser import emanuelefilter, transform_text
-
-
-
+from datetime import datetime   
+import time
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
@@ -54,6 +53,7 @@ async def forwarder(event):
             ext = None
 
         count += 1
+      
         print(cht, count)
 
         if valid:
@@ -63,14 +63,14 @@ async def forwarder(event):
                 print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
             except ConnectionRefusedError:
                 print(f"\u001b[31mRedis broke\u001b[37m...") 
-            except:
-                print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent\u001b[37m...") 
+            except Exception as e:
+                print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent {e}\u001b[37m...") 
         else:
             print(f"\u001b[31mNot Sent invalid {text[:70]} ...Not Sent\u001b[37m...") 
 
 @client.on(events.NewMessage)
 async def wakeup(event):
-    print('..')
+    print('Active...')
 
 client.start()
 client.run_until_disconnected()
