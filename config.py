@@ -8,7 +8,8 @@ channel_input = [int(i) for i in chinput.split(' ')]
 choutput = os.getenv('CHATOUTPUT')
 channel_output = [int(i) for i in choutput.split(' ')] 
 
-REDIS_URL = os.getenv('REDIS_URL')
+
+REDIS_URL = os.getenv('REDISCLOUD_URL')
 
 session = os.getenv("SESSION")
 api_hash = os.getenv("API_HASH")

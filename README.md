@@ -1,5 +1,7 @@
 # Parsesig
 
+![Parsig](https://github.com/konichar/parsesig/blob/master/parsig.png)
+
 
 ## A Telegram program that forwards Forex Signals from one Telegram group or channel to another
 
