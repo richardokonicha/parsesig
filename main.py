@@ -1,3 +1,12 @@
+# from text_parser import emanuelefilter, transform_text
+import time
+from ben_filter import parse_message
+from config import (REDIS_URL, api_hash, api_id, channel_input,
+                    channel_output, session)
+from telethon.tl.functions.channels import GetMessagesRequest
+from telethon.sessions import StringSession
+from telethon import TelegramClient, events
+import redis
 import logging
 from datetime import datetime
 import sentry_sdk
@@ -10,15 +19,6 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-import redis
-from telethon import TelegramClient, events
-from telethon.sessions import StringSession
-from telethon.tl.functions.channels import GetMessagesRequest
-from config import (REDIS_URL, api_hash, api_id, channel_input,
-                    channel_output, session)
-from text_parser import emanuelefilter, transform_text
-from datetime import datetime   
-import time
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
@@ -28,16 +28,16 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
 
 @client.on(
     events.NewMessage(
-        chats= channel_input, 
+        chats=channel_input,
         incoming=True,
         outgoing=True
-        ))
+    ))
 async def forwarder(event):
     text = event.message.text
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
-    valid = emanuelefilter(text)
-    text = transform_text(text)
+    valid = bool(text)
+    text = parse_message(text)
     count = 0
     for cht in channel_output:
         try:
@@ -53,7 +53,7 @@ async def forwarder(event):
             ext = None
 
         count += 1
-      
+
         print(cht, count)
 
         if valid:
@@ -62,11 +62,14 @@ async def forwarder(event):
                 r.set(f"{cht}-{event.message.id}", output_channel.id)
                 print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
             except ConnectionRefusedError:
-                print(f"\u001b[31mRedis broke\u001b[37m...") 
+                print(f"\u001b[31mRedis broke\u001b[37m...")
             except Exception as e:
-                print(f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent {e}\u001b[37m...") 
+                print(
+                    f"\u001b[31mNot Sent an error occurred {text[:70]} ...Not Sent {e}\u001b[37m...")
         else:
-            print(f"\u001b[31mNot Sent invalid {text[:70]} ...Not Sent\u001b[37m...") 
+            print(
+                f"\u001b[31mNot Sent invalid {text[:70]} ...Not Sent\u001b[37m...")
+
 
 @client.on(events.NewMessage)
 async def wakeup(event):
