@@ -10,6 +10,7 @@ import redis
 import logging
 from datetime import datetime
 import sentry_sdk
+import re
 sentry_sdk.init(
     dsn="https://99d6c429276948bd9e71cf6c80d91885@o4504248900583424.ingest.sentry.io/4504248905236480",
 
@@ -36,8 +37,9 @@ async def forwarder(event):
     text = event.message.text
     message_id = event.message.id
     reply_msg = event.message.reply_to_msg_id
-    valid = bool(text)
+
     text = parse_message(text)
+    valid = bool(text)
     count = 0
     for cht in channel_output:
         try:
