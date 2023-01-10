@@ -38,7 +38,7 @@ def getTargetList(text):
 
   return target_list
 
-def benfilter(text):
+def parse_message(text):
 
   try:
     coin = re.search(r'(?<=\$|#)([A-Z]+)', text,
