@@ -1,7 +1,9 @@
 import re
 
+
 def bparse(line):
-    parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
+    parser = re.search(
+        "^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
     if parser != None:
         p = parser.groups()
         place = p[0]
@@ -19,8 +21,10 @@ def bparse(line):
     else:
         return None
 
+
 def tparser(line):
-    parser = re.search("(^[takeTAKE]*\s[profitPROFIT]*)\s\d\s[at@\s]*([\d]*[,.][0-9]*)", line)
+    parser = re.search(
+        "(^[takeTAKE]*\s[profitPROFIT]*)\s\d\s[at@\s]*([\d]*[,.][0-9]*)", line)
     if parser != None:
         p = parser.groups()
         output = f"""✅TP {p[-1]}"""
@@ -28,8 +32,10 @@ def tparser(line):
     else:
         return None
 
+
 def sparser(line):
-    parser = re.search("(^[stopSTOP]*\s[lossLOSS]*)\s[at@\s]*([\d]*[.,][\d]*)", line)
+    parser = re.search(
+        "(^[stopSTOP]*\s[lossLOSS]*)\s[at@\s]*([\d]*[.,][\d]*)", line)
     if parser != None:
         p = parser.groups()
         output = f"""🛑SL {p[-1]}"""
@@ -37,7 +43,8 @@ def sparser(line):
     else:
         return None
 
-def pasig(rawsignal):     
+
+def pasig(rawsignal):
     """entry function to parse forex signals"""
     signal = """"""
     rsignal = rawsignal.split("\n")
@@ -50,7 +57,7 @@ def pasig(rawsignal):
                 signal = signal + """
 """+i
     return signal
-    
+
 
 rawsignal = """
 BUY EURUSD (@ 1.0877) 
@@ -73,12 +80,13 @@ BUY:chart_with_upwards_trend:1.0877
 # print(pasig(rawsignal))
 
 
-### EB10 filters
-
+# EB10 filters
 def emanuelefilter(text):
 
-    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+)", text)
-    invalid = re.search("(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|.com|EXPIRES|@+)", text)
+    parser = re.search(
+        "(GBP|USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|pips|tp|sl)", text)
+    invalid = re.search(
+        "(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|EXPIRES|@+)", text)
 
     value = bool(parser)
     if invalid:
@@ -91,18 +99,21 @@ def transform_text(text):
     parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP)", text)
 
     is_warning = bool(re.search("INVEST WITH CONSCIENCE", text))
+    # https://www.tradingview.com/x/cehtMm4G/
+    has_link = bool(re.search("(.com|www.tradingview.com|https)", text))
 
     if parser:
         if not is_warning:
             text = f"""
 {text}
 ..................................
-
 ⚫ INVEST WITH CONSCIENCE 
 ⚫ Don't invest more than you can afford
 ⚫ This signal does not constitute an investment advice, 
 we are not responsible for money loss
         """
+        if has_link:
+            link = re.search("(https[://w.\w]+)", text).group()
+            text = text.replace(link, " ")
 
     return text
-    

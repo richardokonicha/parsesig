@@ -1,0 +1,20 @@
+# version: '2'
+volumes:
+  data:
+services:
+  redis:
+    image: redis:latest
+    volumes:
+      - data:/data
+    ports:
+      - 6379:6379
+  main:
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONUNBUFFERED=TRUE
+    command: python main.py
+    depends_on:
+      - redis
