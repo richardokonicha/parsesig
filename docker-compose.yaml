@@ -10,15 +10,15 @@ services:
     ports:
       - 6379:6379
   main:
-      # platform: linux/amd64 
-      build:
-          context: .
-          dockerfile: dockerfile
-      # volumes:
-      #     - "./:/app"
-      environment:
-          - REDIS=redis://redis:6379
-          - PYTHONUNBUFFERED=TRUE
-      command: python main.py
-      depends_on:
+    # platform: linux/amd64
+    build:
+      context: .
+      dockerfile: dockerfile
+    # volumes:
+    #     - "./:/app"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONUNBUFFERED=TRUE
+    command: python main.py
+    depends_on:
       - redis
