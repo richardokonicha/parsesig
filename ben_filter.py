@@ -8,6 +8,7 @@ finale = """
 סטופ: {stop_loss}
 """
 
+
 def get_common_value(text):
     coin = re.search(r'(?<=\$|#)([A-Z]+)', text,
                      re.IGNORECASE).group(1) or 'None'
@@ -36,6 +37,7 @@ def get_common_value(text):
 def parse_message(text):
     target_list = ''
     targets = []
+    TARGETS_LIMIT = 8
 
     if re.search(r'Bitcoin Bullets', text, re.IGNORECASE):
         coin, direction, stop_loss, entry = get_common_value(text)
@@ -72,6 +74,9 @@ def parse_message(text):
     else:
         print('Unrecognized signal', text)
         return False
+
+    if len(targets) > TARGETS_LIMIT:
+        targets = targets[1:min(len(targets), TARGETS_LIMIT + 1)]
 
     for i, target in enumerate(targets, start=1):
         target_list += f'{i} - {target}\n'
