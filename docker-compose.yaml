@@ -4,17 +4,24 @@ volumes:
 services:
   redis:
     image: redis:latest
+    networks:
+      - redis_network
+    # network_mode: "none"
     volumes:
       - data:/data
-    ports:
-      - 6379:6379
+    # ports:
+    #   - 6379
   main:
     build:
       context: .
       dockerfile: dockerfile
     environment:
-      - REDIS_URL=redis://redis:6379
+      - REDIS_URL=redis://redis
       - PYTHONUNBUFFERED=TRUE
     command: python main.py
+    networks:
+      - redis_network
     depends_on:
       - redis
+networks:
+  redis_network:
