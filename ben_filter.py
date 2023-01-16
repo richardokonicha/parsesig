@@ -10,7 +10,7 @@ finale = """
 
 
 def get_common_value(text):
-    coin = re.search(r'(?<=\$|#)([A-Z]+)', text,
+    coin = re.search(r'(?<=\$)([A-Z]+)', text,
                      re.IGNORECASE).group(1) or 'None'
     direction = re.search(r'(long|short)',
                           text, re.IGNORECASE).group(1) or 'None'
@@ -56,6 +56,8 @@ def parse_message(text):
 
     elif re.search(r'Long Entry Zone', text, re.IGNORECASE):
         coin, direction, stop_loss, entry = get_common_value(text)
+        coin = re.search(r'(?<=\$|#)([A-Z]+)', text,
+                     re.IGNORECASE).group(1) or 'None'
         targets = re.findall(
             r'(?<=Target[s\s][\d])[\D]+([\d.]+)', text, re.IGNORECASE)
         print("Long Entry Zone")
