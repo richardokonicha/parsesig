@@ -1,7 +1,6 @@
-# version: '2'
+version: "2"
 volumes:
   data:
-
 services:
   redis:
     image: redis:latest
@@ -9,15 +8,10 @@ services:
       - redis_network
     volumes:
       - data:/data
-    # ports:
-    #   - 6379:6379
   main:
-    # platform: linux/amd64
     build:
       context: .
       dockerfile: dockerfile
-    # volumes:
-    #     - "./:/app"
     environment:
       - REDIS_URL=redis://redis
       - PYTHONUNBUFFERED=TRUE
