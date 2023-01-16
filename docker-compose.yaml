@@ -10,7 +10,6 @@ services:
       - data:/data
   main:
     build:
-      context: .
       dockerfile: dockerfile
     environment:
       - REDIS_URL=redis://redis
