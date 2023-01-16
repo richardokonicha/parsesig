@@ -10,7 +10,7 @@ services:
       - data:/data
   main:
     build:
-      dockerfile: dockerfile
+      dockerfile: ./dockerfile
     environment:
       - REDIS_URL=redis://redis
       - PYTHONUNBUFFERED=TRUE
