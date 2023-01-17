@@ -10,8 +10,8 @@ finale = """
 
 
 def get_common_value(text):
-    coin = re.search(r'(?<=\$)([A-Z]+)', text,
-                     re.IGNORECASE).group(1) or 'None'
+    # coin = re.search(r'(?<=\$)([A-Z]+)', text,
+    #                  re.IGNORECASE).group(1) or 'None'
     direction = re.search(r'(long|short)',
                           text, re.IGNORECASE).group(1) or 'None'
     # Convert direction to Hebrew
@@ -26,7 +26,7 @@ def get_common_value(text):
         r'(stop[\s-]loss|sl)[\\n:\s*]+([\d.]+)', text, re.IGNORECASE).group(2) or 'None'
 
     value = {
-        coin: coin,
+        # coin: coin,
         direction: direction,
         stop_loss: stop_loss,
         entry: entry
@@ -40,7 +40,9 @@ def parse_message(text):
     TARGETS_LIMIT = 8
 
     if re.search(r'Bitcoin Bullets', text, re.IGNORECASE):
-        coin, direction, stop_loss, entry = get_common_value(text)
+        coin = re.search(r'(?<=\$)([A-Z]+)', text,
+                     re.IGNORECASE).group(1) or 'None'
+        direction, stop_loss, entry = get_common_value(text)
         entry = entry.replace("to", "-")
         target_re = re.search(
             r'(Target[s\s*\\n]+)([\d.\n]+)', text, re.IGNORECASE).group(2) or 'None'
@@ -49,13 +51,15 @@ def parse_message(text):
         print("Bitcoin Bullets")
 
     elif re.search(r'Russian Insiders',  text, re.IGNORECASE):
-        coin, direction, stop_loss, entry = get_common_value(text)
+        coin = re.search(r'(?<=\$)([A-Z]+)', text,
+                     re.IGNORECASE).group(1) or 'None'
+        direction, stop_loss, entry = get_common_value(text)
         targets = re.findall(
             r'(?<=Target[s\s][\d])[\D]+([\d.]+)', text, re.IGNORECASE)
         print("Russian Insider")
 
     elif re.search(r'Long Entry Zone', text, re.IGNORECASE):
-        coin, direction, stop_loss, entry = get_common_value(text)
+        direction, stop_loss, entry = get_common_value(text)
         coin = re.search(r'(?<=\$|#)([A-Z]+)', text,
                      re.IGNORECASE).group(1) or 'None'
         targets = re.findall(
@@ -63,7 +67,9 @@ def parse_message(text):
         print("Long Entry Zone")
 
     elif re.search(r'SIGNAL ID', text, re.IGNORECASE):
-        coin, direction, stop_loss, entry = get_common_value(text)
+        coin = re.search(r'(?<=\$)([A-Z]+)', text,
+                     re.IGNORECASE).group(1) or 'None'
+        direction, stop_loss, entry = get_common_value(text)
         short_term_targets = re.search(
             r'Short\s*Term:\s*([\d.\s*-]+)', text, re.IGNORECASE).group(1) or 'None'
         mid_term_targets = re.search(
