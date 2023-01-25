@@ -86,7 +86,9 @@ def emanuelefilter(text):
     parser = re.search(
         "(GBP|USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|pips|tp|sl)", text)
     invalid = re.search(
-        "(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|EXPIRES|@+)", text)
+        "(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|.com|https:|24//7|EXPIRES|@+)", text)
+
+        
 
     value = bool(parser)
     if invalid:
