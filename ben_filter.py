@@ -1,4 +1,6 @@
 import re
+from fractions import Fraction
+
 finale = """
 {coin}
 {direction}
@@ -6,6 +8,8 @@ finale = """
 מטרות:
 {target_list}
 סטופ: {stop_loss}
+
+RR {RR}
 """
 
 
@@ -32,6 +36,23 @@ def get_common_value(text):
         entry: entry
     }
     return value
+
+
+def calculate_rr(entry, stop_loss, targets):
+    try:
+        entrylist = entry.replace(" ", '').split('-')
+        entry_range = (float(entrylist[-1]) + float(entrylist[0]))/2
+        highest_target = float(targets[-1])
+        float_st = float(stop_loss)
+        ratio = (highest_target - entry_range)/(entry_range - float_st)
+        fraction_value = Fraction(ratio).limit_denominator(1)
+        numerator = fraction_value.numerator
+        denominator = fraction_value.denominator
+        RR = f'{numerator}:{denominator}'
+    except Exception as e:
+        print(e, "RR calculations error")
+        return None
+    return RR
 
 
 def parse_message(text):
@@ -92,13 +113,17 @@ def parse_message(text):
         except:
             target_list += f'{i} - {target}\n'
 
+
+    RR = calculate_rr(entry, stop_loss, targets)
+
     try:
         template_message = finale.format(
             coin=coin,
             direction=direction,
             entry=entry,
             stop_loss=stop_loss,
-            target_list=target_list
+            target_list=target_list,
+            RR=RR
         )
         return template_message
     except Exception as e:
