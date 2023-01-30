@@ -21,7 +21,7 @@ def get_common_value(text):
         direction = 'שורד'
 
     entry = re.search(
-        r'(?<=ENTRY\b)[\s\n:a-z*]+([\d.]+\b([\sto]+|[\s-]+)[\d.]+\b)', text, re.IGNORECASE).group(1) or 'None'
+        r'(?<=ENTRY\b|ENTER)[\s\n:a-z*]+([\d.]+\b([\sto]+|[\s-]+)[\d.]+\b)', text, re.IGNORECASE).group(1) or 'None'
     stop_loss = re.search(
         r'(stop[\s-]loss|sl)[\\n:\s*]+([\d.]+)', text, re.IGNORECASE).group(2) or 'None'
 
@@ -45,7 +45,7 @@ def parse_message(text):
         direction, stop_loss, entry = get_common_value(text)
         entry = entry.replace("to", "-")
         target_re = re.search(
-            r'(Target[s\s*\\n]+)([\d.\n]+)', text, re.IGNORECASE).group(2) or 'None'
+            r'(Target[s\s*\\n]+|TP[s\s*\\n]+)([\d.\n]+)', text, re.IGNORECASE).group(2) or 'None'
         targets = target_re.split("\n")
         targets = [x for x in targets if x]
         print("Bitcoin Bullets")
@@ -87,7 +87,10 @@ def parse_message(text):
         targets = targets[1:min(len(targets), TARGETS_LIMIT + 1)]
 
     for i, target in enumerate(targets, start=1):
-        target_list += f'{i} - {target}\n'
+        try:
+            target_list += f'{i} - {format(float(target), ".3f")}\n'
+        except:
+            target_list += f'{i} - {target}\n'
 
     try:
         template_message = finale.format(
