@@ -6,7 +6,7 @@ import redis
 from text_parser import pasig
 from datetime import datetime
 import sentry_sdk
-from config import api_hash, api_id, channel_input, channel_output, session, REDIS_URL
+from config import api_hash, api_id, channel_input, channel_output, session, REDIS_URL, sentry_env
 # from util import bot_forward
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
