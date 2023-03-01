@@ -19,5 +19,7 @@ python-dotenv==0.15.0
 redis==3.5.3
 requests==2.25.1
 rsa==4.7
-Telethon==1.19.0
-urllib3==1.26.2
+Telethon>=1.19.0
+urllib3>=1.26.2
+sentry_sdk>=1.11.1
+
