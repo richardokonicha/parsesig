@@ -30,6 +30,7 @@ client = TelegramClient(StringSession(session), api_id, api_hash)
         incoming=True,
     ))
 async def forwarder(event):
+    print("working........")
     try:
 
         text = event.message.text
@@ -66,10 +67,10 @@ async def forwarder(event):
 # keeps heroku from falling asleep
 
 
-@client.on(events.NewMessage)
-async def wakeup(event):
-    text = event.message.text
-    print(text)
+# @client.on(events.NewMessage)
+# async def wakeup(event):
+#     text = event.message.text
+#     print(text)
 
 client.start()
 # save_session(client, session)
