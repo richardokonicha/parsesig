@@ -10,7 +10,7 @@ chinput = '-1001236662259 -1001193424112'
 channel_input = [int(i) for i in chinput.split(' ')]
 choutput = os.getenv('CHATOUTPUT')
 choutput = '-1001221680759'
-channel_output = [int(i) for i in choutput.split(' ')]
+channel_output = choutput
 
 REDIS_URL = os.getenv('REDIS_URL')
 
