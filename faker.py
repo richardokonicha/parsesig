@@ -9,13 +9,14 @@ from telethon.sessions import StringSession
 
 from telethon.sync import TelegramClient, events
 
-with TelegramClient(StringSession(session), api_id, api_hash) as client:
-   for dialog in client.iter_dialogs():
-         print(dialog.name, dialog.id)
+with TelegramClient(StringSession(""), api_id, api_hash) as client:
+    for dialog in client.iter_dialogs():
+        print(dialog.name, dialog.id)
 
 
 #    @client.on(events.NewMessage(pattern='(?i).*Hello'))
 #    async def handler(event):
 #       await event.reply('Hey!')
 
-   client.run_until_disconnected()
+    client.run_until_disconnected()
+

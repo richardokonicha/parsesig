@@ -5,7 +5,7 @@ load_dotenv()
 
 
 chinput = os.getenv('CHATINPUT')
-chinput = '-1001221682168'
+chinput = '-1001221682168 -1001942212599'
 channel_input = [int(i) for i in chinput.split(' ')]
 
 choutput = os.getenv('CHATOUTPUT')

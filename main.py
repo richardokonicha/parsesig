@@ -36,7 +36,8 @@ async def forwarder(event):
         reply_msg = event.message.reply_to_msg_id
 
         # cleaned_text = parse_message(text)
-        valid = bool(text)
+        cleaned_text = text
+        valid = bool(cleaned_text)
         count = 0
         for cht in channel_output:
             try:
