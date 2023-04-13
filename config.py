@@ -3,13 +3,14 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
+chinputsub = os.getenv('CHATINPUTSUB')
 
 chinput = os.getenv('CHATINPUT')
-chinput = '-1001221682168 -1001942212599'
+# chinput = '-1001221682168 -1001942212599'
 channel_input = [int(i) for i in chinput.split(' ')]
 
 choutput = os.getenv('CHATOUTPUT')
-choutput = '-1001907605122'
+# choutput = '-1001907605122'
 channel_output = [int(i) for i in choutput.split(' ')]
 
 REDIS_URL = os.getenv('REDIS_URL')
