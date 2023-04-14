@@ -10,10 +10,10 @@ import re
 
 from telethon.sync import TelegramClient, events
 
-with TelegramClient(StringSession("----="), api_id, api_hash) as client:
+with TelegramClient(StringSession("--NYoi0JpICXdw1vnM_6-5Wfb00snVJqdPGCjfhLUyfJWFGeFa7apNpC2bKE8qA8bPc7wqWuhUE5muEVQX7C9oUToV65w3H2h_qRCIAKiSF72kpZzWinMzJWNihpAv68dEQ_cpx0XUpgX4gOgvazzKE98mV8Wmd39nms_LHGFfpUF-cghLu_PrJVGrICoMTqWpfRxpXWA1kxPOAOAh_mvhZmNBTUazQEMsn4="), api_id, api_hash) as client:
 
     for dialog in client.iter_dialogs():
-        if re.search("ABI", dialog.name):
+        if re.search("FX Channel Signal", dialog.name):
             print(dialog.name, dialog.id)
 
     #    @client.on(events.NewMessage(pattern='(?i).*Hello'))
