@@ -3,11 +3,12 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
-chinputsub = os.getenv('CHATINPUTSUB')
+chinput2 = os.getenv('CHATINPUT2')
 
 chinput = os.getenv('CHATINPUT')
 # chinput = '-1001221682168 -1001942212599'
 channel_input = [int(i) for i in chinput.split(' ')]
+channel_input.append(int(chinput2))
 
 choutput = os.getenv('CHATOUTPUT')
 # choutput = '-1001907605122'
