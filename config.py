@@ -4,10 +4,15 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
+# chinput = '-1001236662259 -1001193424112'
 
 chinput = os.getenv('CHATINPUT')
-chinput = '-1001236662259 -1001193424112'
+chinput2 = os.getenv('CHATINPUT2')
+chinput3 = os.getenv('CHATINPUT3')
 channel_input = [int(i) for i in chinput.split(' ')]
+if chinput2: channel_output.append(int(choutput2))
+if chinput3: channel_output.append(int(choutput2))
+
 choutput = os.getenv('CHATOUTPUT')
 # choutput = '-1001221680759'
 channel_output = choutput
