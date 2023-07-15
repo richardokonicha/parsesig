@@ -10,8 +10,8 @@ chinput = os.getenv('CHATINPUT')
 chinput2 = os.getenv('CHATINPUT2')
 chinput3 = os.getenv('CHATINPUT3')
 channel_input = [int(i) for i in chinput.split(' ')]
-if chinput2: channel_output.append(int(choutput2))
-if chinput3: channel_output.append(int(choutput2))
+if chinput2: channel_input.append(int(chinput2))
+if chinput3: channel_input.append(int(chinput3))
 
 choutput = os.getenv('CHATOUTPUT')
 # choutput = '-1001221680759'
