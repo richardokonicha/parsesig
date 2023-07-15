@@ -15,7 +15,7 @@ if chinput3: channel_input.append(int(chinput3))
 
 choutput = os.getenv('CHATOUTPUT')
 # choutput = '-1001221680759'
-channel_output = choutput
+channel_output = int(choutput)
 
 REDIS_URL = os.getenv('REDIS_URL')
 
