@@ -18,3 +18,5 @@ session = os.getenv("SESSION")
 api_hash = os.getenv("API_HASH")
 api_id = os.getenv("API_ID")
 sentry_env = os.getenv("SENTRY_ENV")
+
+FILTER = os.getenv('FILTER')
