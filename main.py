@@ -11,7 +11,7 @@ import logging
 from datetime import datetime
 import sentry_sdk
 import re
-from text_parser import pasig
+from text_parser import is_valid, pasig
 
 sentry_sdk.init(
     dsn=sentry_env,
@@ -36,10 +36,12 @@ async def forwarder(event):
         text = event.message.text
         message_id = event.message.id
         reply_msg = event.message.reply_to_msg_id
-        cleaned_text = pasig(text)
+        cleaned_text = pasig(text) or text
+        valid = is_valid(text)
         if FILTER=='False':
+            valid = True
             cleaned_text = text
-        valid = bool(cleaned_text)
+
         count = 0
         for cht in channel_output:
             try:

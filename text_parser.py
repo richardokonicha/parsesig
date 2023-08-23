@@ -1,10 +1,16 @@
 import re
 
+def is_valid(text):
+    "filter"
+    invalid = re.search("(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|EXPIRES|easyforexpips|FREE COPY)", text)
+    value = bool(invalid)
+    return not value
+
 def bparse(line):
-    parser = re.search("^(BUY|SELL)\s([A-Z]*)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).]", line)
-    if parser != None:
+    parser = re.search("([A-Z]*)\s(BUY|SELL)\s[\(@at\s]*([0-9]*[.,][0-9]*)[\).\s]*", line)
+    if parser is not  None:
         p = parser.groups()
-        place = p[0]
+        place = p[1]
         place = place.upper()
 
         if place == "BUY":
@@ -12,16 +18,16 @@ def bparse(line):
         if place == "SELL":
             flag = '📉'
         output = f"""
-#{p[1]}
-{p[0]}{flag}{p[2]}
+#{p[0]}
+{p[1]}{flag}{p[2]}
 """
         return output
     else:
         return None
 
 def tparser(line):
-    parser = re.search("(^[takeTAKE]*\s[profitPROFIT]*)\s\d\s[at@\s]*([\d]*[,.][0-9]*)", line)
-    if parser != None:
+    parser = re.search("(^[TP:]*)\s[at@\s]*([\d]*[,.][0-9]*)", line)
+    if parser is not  None:
         p = parser.groups()
         output = f"""✅TP {p[-1]}"""
         return output
@@ -29,8 +35,8 @@ def tparser(line):
         return None
 
 def sparser(line):
-    parser = re.search("(^[stopSTOP]*\s[lossLOSS]*)\s[at@\s]*([\d]*[.,][\d]*)", line)
-    if parser != None:
+    parser = re.search("(^[SL:]*)\s[at@\s]*([\d]*[,.][0-9]*)", line)
+    if parser is not  None:
         p = parser.groups()
         output = f"""🛑SL {p[-1]}"""
         return output
@@ -60,6 +66,27 @@ Take profit 3 at 1.0977
 Stop loss at 1.0795
 """
 
+rawsignal1 = """
+EURUSD BUY @ 1.0943 / 1.0949
+TP: 1.0963 (scalper) 
+TP: 1.0993 (intraday) 
+TP: 1.1043 (swing)
+SL: 1.0873
+▪️Use money management 2-3%
+"""
+
+rawsignal2 = """
+
+CHFJPY SELL @ 165.81 / 165.76
+
+TP: 165.61 (scalper) 
+TP: 165.31 (intraday) 
+TP: 164.81 (swing)
+SL: 166.61
+
+▪️Use money management 2-3%
+"""
+
 outputsignal = """
 #EURUSD 
 BUY:chart_with_upwards_trend:1.0877
@@ -70,47 +97,7 @@ BUY:chart_with_upwards_trend:1.0877
 🛑SL 1.0795
 """
 
-# print(pasig(rawsignal))
+# print(pasig(rawsignal2))
 
+# ..................
 
-### EB10 filters
-
-def emanuelefilter(text):
-
-    parser = re.search("(GBP|USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|pips|tp|sl)", text)
-    invalid = re.search("(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|24//7|EXPIRES|@+)", text)
-
-    value = bool(parser)
-    if invalid:
-        value = False
-        print('message filtered out, Cheers')
-    return value
-
-
-def transform_text(text):
-    parser = re.search("(USD|EUR|NZD|CAD|JPY|AUD|CHF|GBP)", text)
-
-    is_warning = bool(re.search("INVEST WITH CONSCIENCE", text))
-    # https://www.tradingview.com/x/cehtMm4G/
-    has_link = bool(re.search("(.com|www.tradingview.com|https)", text))
-
-    if parser:
-        if not is_warning:
-            text = f"""
-{text}
-..................................
-
-⚫ INVEST WITH CONSCIENCE 
-⚫ Don't invest more than you can afford
-⚫ This signal does not constitute an investment advice, 
-we are not responsible for money loss
-        """
-        if has_link:
-            link = re.search("(https[://w.\w]+)", text).group()
-            text = text.replace(link, " ")
-
-    return text
-
-    
-
-    
