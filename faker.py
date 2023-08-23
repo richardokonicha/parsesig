@@ -13,8 +13,16 @@ from telethon.sync import TelegramClient, events
 with TelegramClient(StringSession(""), api_id, api_hash) as client:
 
     for dialog in client.iter_dialogs():
-        if re.search("FX Channel Signal", dialog.name):
+        if str(dialog.id) == '-1001436688109':
             print(dialog.name, dialog.id)
+            for message in client.iter_messages(dialog.id):
+                print(message.id, message.text)
+
+        print(dialog.name, dialog.id)
+        
+
+        # if re.search("FX Channel Signal", dialog.name):
+        #     print(dialog.name, dialog.id)
 
     #    @client.on(events.NewMessage(pattern='(?i).*Hello'))
     #    async def handler(event):
@@ -33,3 +41,6 @@ with TelegramClient(StringSession(""), api_id, api_hash) as client:
 # '1BJWap1wBu6NjgbVY-yY881W-xDdhrVrUJOmlgQRN5y-sjOZ-E1NDa1-JnfL-_hPfR5hxIjc_MMuJN4ibrQggOrALISbMSi27qY23eJyurncHPxQlN1KVfzuW40aTzHaHhT6cj07epxKAhzj5Q6ict5JvMA_aYw-pt_tBgagx2zQUFA0baePn5CjqmaLIvo9fwtaY-O7SpcWttZJpZpBQu9d5uKJfgkcKiqDJ5SrBe-aHjFgiGgav4v79CzNdXz57o0m5LCEq-RdiH_MEBxgC5C1eQEYBr8gWZagfYWIMk4FLVZUUbbduz1rxXRMJzMtMAbgatnrhWubnnWNHNHCgO0bOUusr_3E='
 
 # '1BJWap1wBuxrhCrFKV0-Ptty-6yA5E7nOHqZZC2nonVibbjoHpNFtoaxip3JoS9PBSMR2K3oTSXw2i4mw44K0unefQYkJJW2vnzUEh2IkThfZ7ulXmTd8yR6jCAVRFvfuQmbMGdcoCwLoXuSHpJKSq5e-xTdR8xZrTHkITWYJcAlqsDUvdNbb-Xf9p6MgDeU2XTfAz97gQPj6lpDX-KQfXlY-7oGN0iFd0zYdiYHWAbFkvpiOQZqqx9y8-L4EM9MiJyMsqN7QJ90EIFBt6g1RiY3Sy-53sMbjuHPgEfAB1eCvHbldmm3pyM7hktI4Lfn50MMYNgYBtUeID15LJguL9_1FDRAaN2U='
+
+
+# '1BJWap1sBu2c7Q8FwW3LZ0yVAoKRb-8PY7PX5jXcerqtz3eZTod-Ro54HZUays3e21T62sL1ikEQyE3iY_Quy7_Fodm_jNI2nJchwRZjP6V6ULAv39nFCwAiCAklr2WmjymFo1dsUcvD4sKJdLdsp0eoXsJjxZ8RS_fqwalxRE16H-lH6nX3zrMITLKAEYviMkyNGYup1ZCoVqKieiLf-AXBMD_xwGZFpx5PBA2iOAfnc6KawAjftPErzpvGE-WOr1wKNN8nXiUUmpa3xseRNBBksBoCUH78HR-iBcSeqZrV73sWxJMAf8SdgPCQAWBxeN211J0LfLVWlz8HxBi0Xk9HfprQHWos='
