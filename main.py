@@ -36,8 +36,8 @@ async def forwarder(event):
         text = event.message.text
         message_id = event.message.id
         reply_msg = event.message.reply_to_msg_id
-        cleaned_text = pasig(text) or text
-        valid = is_valid(text)
+        cleaned_text = pasig(text)
+        valid = is_valid(text) and cleaned_text is not None
         if FILTER=='False':
             valid = True
             cleaned_text = text
