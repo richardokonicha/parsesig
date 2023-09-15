@@ -55,6 +55,9 @@ async def forwarder(event):
             except:
                 msg_file = None
                 ext = None
+            
+            if msg_file:
+                valid = False
 
             count += 1
             print(cht, count)
