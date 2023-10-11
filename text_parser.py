@@ -84,7 +84,9 @@ BUY:chart_with_upwards_trend:1.0877
 def emanuelefilter(text):
 
     parser = re.search(
-        "(GBP|USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|pips|tp|sl|UK+|US+|SELL+|BUY+)", text)
+        "(GBP|USD|EUR|NZD|CAD|JPY|AUD|TP+|SL+|Close+|pips|tp|sl|UK+|US+|SELL+|BUY+|GER+|CLOSE|GOLD)", text)
+
+    
     invalid = re.search(
         "(OFFER|DISCOUNT|JOIN|TELEGRAM|DON'T MISS|MT4|.com|https:|24//7|EXPIRES|@+)", text)
 
