@@ -6,7 +6,7 @@ import redis
 from text_parser import emanuelefilter, transform_text
 from datetime import datetime
 import time
-from config import api_hash, api_id, channel_input, channel_output, session, sentry_env, REDIS_URL
+from config import api_hash, api_id, channel_input, chinput, channel_output, session, sentry_env, REDIS_URL
 import sentry_sdk
 
 sentry_sdk.init(
@@ -55,15 +55,31 @@ async def forwarder(event):
         print(cht, count)
 
         if valid:
-            try:
-                output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
-                r.set(f"{cht}-{event.message.id}", output_channel.id)
-                print(f"\u001b[32mSENT......{text}....SENT\u001b[37m....")
-            except redis.exceptions.ConnectionError as e:
-                print(f"\u001b[31mRedis broke\u001b[37m...", e)
-            except Exception as e:
-                print(
+            if event.chat_id in channel_input:
+                if cht == -1001306355077:
+                    if event.chat_id == chinput:
+                        try:
+                            output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
+                            r.set(f"{cht}-{event.message.id}", output_channel.id)
+                            print(f"\u001b[32mSENT to {cht}: {text}....SENT\u001b[37m....")
+                        except redis.exceptions.ConnectionError as e:
+                            print(f"\u001b[31mRedis broke\u001b[37m...", e)
+                        except Exception as e:
+                            print(
+                                f"\u001b[31mNot Sent an error occurred {text[:min(len(text), 50)]} ...Not Sent {e}\u001b[37m...")
+                else:
+                    try:
+                        output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
+                        r.set(f"{cht}-{event.message.id}", output_channel.id)
+                        print(f"\u001b[32mSENT to {cht}: {text}....SENT\u001b[37m....")
+                    except redis.exceptions.ConnectionError as e:
+                        print(f"\u001b[31mRedis broke\u001b[37m...", e)
+                    except Exception as e:
+                        print(
                     f"\u001b[31mNot Sent an error occurred {text[:min(len(text), 50)]} ...Not Sent {e}\u001b[37m...")
+            else:
+                print(
+                    f"\u001b[31mNot Sent invalid {text[:min(len(text), 50)]} ...Not Sent\u001b[37m...")
         else:
             print(
                 f"\u001b[31mNot Sent invalid {text[:min(len(text), 50)]} ...Not Sent\u001b[37m...")
