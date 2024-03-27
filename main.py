@@ -56,8 +56,9 @@ async def forwarder(event):
 
         if valid:
             if event.chat_id in channel_input:
-                if cht == -1001306355077:
-                    if event.chat_id == chinput:
+                if str(cht) == '-1001306355077':
+                    print("Sending to special destination 1001306355077")
+                    if str(event.chat_id) == str(chinput):
                         try:
                             output_channel = await client.send_message(cht, text, file=msg_file, reply_to=ref)
                             r.set(f"{cht}-{event.message.id}", output_channel.id)
